@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import Colors from '../../components/Colors'
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import tarif from '../../components/tarif.json';
+// import tarif from '../../components/tarif.json';
 
 
 class Favs extends Component {
@@ -41,7 +41,7 @@ class Favs extends Component {
                     {this.props.favs.length > 0 ?
 
                         this.props.favs.map((id, index) => {
-                            const item = tarif.filter(item => item.id == id)[0]
+                            const item = this.props.tarif.filter(item => item.id == id)[0]
                             return (
                                 <TouchableOpacity
                                     key={index}
@@ -92,6 +92,7 @@ class Favs extends Component {
 const mapStateToProps = (state) => {
     return {
         favs: state.tarifReducers.favs,
+        tarif: state.jsonReducers.json,
     }
 }
 

@@ -23,6 +23,9 @@ import {
 
 import * as Network from 'expo-network';
 
+import axios from 'axios';
+
+
 class Tarif extends Component {
 
     constructor(props) {
@@ -32,7 +35,7 @@ class Tarif extends Component {
             adsCounter: 1,
             adsInterstitial: false,
             yemek: '',
-            isFav: false,
+            isFav: () => this.isFav(),
             indexTab: 0,
             routes: [
                 { key: 'first', title: 'First' },
@@ -47,6 +50,7 @@ class Tarif extends Component {
         this.focusListener = this.props.navigation.addListener('willFocus', () => {
             this.setYemek();
         });
+
     }
 
     addFav = (yemekid) => {
@@ -83,7 +87,7 @@ class Tarif extends Component {
         } else if (topic === "tatli") {
             return "Tatlı Hazır!"
         } else if (this.props.navigation.getParam('navFav') === true) {
-            return "Favorin"
+            return "Favorin ❤"
         }
     }
 
@@ -93,7 +97,8 @@ class Tarif extends Component {
     }
 
 
-    setYemek = () => {
+    setYemek = async () => {
+
         this.setState({ loading: true })
         if (this.props.hersey === true) {
 
@@ -123,16 +128,31 @@ class Tarif extends Component {
             const randomIndex = Math.floor(Math.random() * categories[topic].length);
             const category = categories[topic][randomIndex]
 
-            const index = Math.floor(Math.random() * this.props.tarif.filter(item => item.recipe.subCategory == category).length);
+            // const index = Math.floor(Math.random() * this.props.tarif.filter(item => item.recipe.subCategory == category).length);
+
+            await axios.get('http://tarif.oguzydz.me/get.php?category=' + category)
+                .then(res => {
+                    this.setState({
+                        yemek: res.data,
+                        loading: false,
+                        isFav: this.isFav(),
+                        internet: async () => await Network.getNetworkStateAsync()
+                    })
+
+
+                    console.log(res.data)
+                });
 
 
 
-            this.setState({
-                yemek: this.props.tarif.filter(item => item.recipe.subCategory == category)[index],
-                loading: false,
-                isFav: this.isFav(),
-                internet: async () => await Network.getNetworkStateAsync()
-            })
+
+
+            // this.setState({
+            //     yemek: this.props.tarif.filter(item => item.recipe.subCategory == category)[index],
+            //     loading: false,
+            //     isFav: this.isFav(),
+            //     internet: async () => await Network.getNetworkStateAsync()
+            // })
 
         }
 
@@ -246,7 +266,7 @@ class Tarif extends Component {
 
 
             const index = Math.floor(Math.random() * this.props.tarif.filter(item => item.recipe.subCategory == category).length);
-            const isHere = favs.filter(item => item.id == this.props.tarif.filter(item => item.recipe.subCategory == category)[index].id);
+            const isHere = favs.filter(item => item.id == this.state.yemek.id);
 
 
             if (isHere.length > 1) {
@@ -254,13 +274,16 @@ class Tarif extends Component {
             } else {
                 return false;
             }
-
-
         }
-
-
-
     }
+
+    // cleanTitle = (title) => {
+    //     title.replace('videolu', '')
+    //     title.replace('Videolu', '')
+    //     title.replace('(videolu)', '')
+    //     title.replace('(Videolu)', '')
+    //     return title
+    // }
 
     render() {
         return (
@@ -285,7 +308,10 @@ class Tarif extends Component {
                                 fontSize: 22,
                                 fontWeight: "bold",
                                 textAlign: "center"
-                            }}>{this._renderTitle()}</Text>
+                            }}>
+                                {/* {this._renderTitle(this.state.yemek.title)} */}
+                                {this.state.yemek.title}
+                            </Text>
                         </View>
                         <View style={{
                             flex: 1,
@@ -313,13 +339,26 @@ class Tarif extends Component {
                                     style={{
                                         position: "absolute",
                                         zIndex: 2,
-                                        top: 25,
-                                        right: 25,
+                                        top: 30,
+                                        right: 30,
                                         backgroundColor: "white",
-                                        padding: 5,
-                                        borderRadius: 10
+                                        padding: 7,
+                                        paddingRight: 9,
+                                        paddingLeft: 9,
+                                        borderRadius: 30,
+                                        shadowColor: "#000",
+                                        shadowOffset: {
+                                            width: 0,
+                                            height: 2,
+                                        },
+                                        shadowOpacity: 0.25,
+                                        shadowRadius: 3.84,
+                                        elevation: 5,
+                                        borderWidth: 1,
+                                        borderColor: Colors.yellow
                                     }}>
-                                    <Icon name="ios-star" size={40} color={Colors.yellow} />
+
+                                    <Icon name="ios-star" size={30} color={Colors.yellow} />
                                 </View>
                                 : null}
                             <Image
@@ -343,7 +382,10 @@ class Tarif extends Component {
                                 <Text style={{
                                     fontSize: 25,
                                     fontWeight: "500"
-                                }}>{this.state.yemek.title}</Text>
+                                }}>
+                                    {/* {this.cleanTitle(this.state.yemek.title)} */}
+                                    {this.state.yemek.title}
+                                </Text>
                             </View>
                         </View>
                         <View style={{
@@ -351,12 +393,12 @@ class Tarif extends Component {
                         }}>
                             <View style={styles.infoBox}>
                                 <View style={styles.leftInfo}>
-                                    <Text style={{fontSize: 17, color: 'white', fontWeight: "bold"}}>
+                                    <Text style={{ fontSize: 17, color: 'white', fontWeight: "bold" }}>
                                         Hazırlama: {this.state.yemek.recipe.prepDuration}
                                     </Text>
                                 </View>
                                 <View style={styles.rightInfo}>
-                                    <Text style={{fontSize: 17, color: 'white', fontWeight: "bold"}}>
+                                    <Text style={{ fontSize: 17, color: 'white', fontWeight: "bold" }}>
                                         Pişirme: {this.state.yemek.recipe.cookDuration}
                                     </Text>
                                 </View>
@@ -424,18 +466,20 @@ class Tarif extends Component {
                             </TouchableOpacity> : null
                         }
                     </View>
-                    {this.props.hersey !== true ?
-                        <View style={{
-                            bottom: 0, zIndex: 2, flexDirection: "row", justifyContent: "center", padding: 20, shadowColor: "#000",
-                            shadowOffset: {
-                                width: 0,
-                                height: 2,
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 3.84,
-                            elevation: 5,
-                        }}>
-                            {this.state.loading === false ?
+                    {this.state.isFav !== true ?
+                        this.props.hersey !== true ?
+
+                            <View style={{
+                                bottom: 0, zIndex: 2, flexDirection: "row", justifyContent: "center", padding: 20, shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 2,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 3.84,
+                                elevation: 5,
+                            }}>
+
                                 <TouchableOpacity onPress={() => this.refreshRandomsNew()} style={{
                                     backgroundColor: Colors.red, padding: 10, borderRadius: 30, paddingRight: 15, paddingLeft: 15, flexDirection: "row", justifyContent: "center", alignItems: "center",
                                     shadowColor: "#000",
@@ -450,12 +494,11 @@ class Tarif extends Component {
                                 }}>
 
                                     <Icon name="ios-refresh" size={40} color="white" />
-
-
                                     {/* <Text style={{ fontSize: 17, color: "#fff", paddingLeft: 10 }}>Başka</Text> */}
                                 </TouchableOpacity>
-                                : null}
-                        </View>
+
+                            </View>
+                            : null
                         : null}
                 </View>
             </View>
@@ -470,7 +513,7 @@ const mapStateToProps = (state) => {
     return {
         favs: state.tarifReducers.favs,
         auth: state.tarifReducers.auth,
-        tarif: state.jsonReducers.json,
+        // tarif: state.jsonReducers.json,
     }
 }
 

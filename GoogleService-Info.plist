@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>512674340518-dr35htplqj2ro2o6g1fhoves8mra4clo.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.512674340518-dr35htplqj2ro2o6g1fhoves8mra4clo</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>512674340518-6ga3cjdl7lq9dgn2phv28rhp9vjs4h8h.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBU1rCJsJt62ORZpfDf31s9wVxvlQQ7sOY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>512674340518</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.neyesek</string>
+	<key>PROJECT_ID</key>
+	<string>neyesek-401c8</string>
+	<key>STORAGE_BUCKET</key>
+	<string>neyesek-401c8.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:512674340518:ios:f28e0810ca4336f9215e67</string>
+	<key>DATABASE_URL</key>
+	<string>https://neyesek-401c8.firebaseio.com</string>
+</dict>
+</plist>

@@ -101,6 +101,12 @@ export const logout = () => async dispatch => {
     })
 }
 
+export const login_anonymous = (user) => async dispatch => {
+    dispatch({
+        type: actions.LOGIN_ANONYMOUS,
+        payload: user
+    })
+}
 
 
 export const random_tarif = () => async dispatch => {
@@ -136,4 +142,5 @@ export const remove_fav = (yemekid) => async dispatch => {
         payload: yemekid
     })
 }
+
 

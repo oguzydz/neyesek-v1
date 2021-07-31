@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "512674340518",
+    "firebase_url": "https://neyesek-401c8.firebaseio.com",
+    "project_id": "neyesek-401c8",
+    "storage_bucket": "neyesek-401c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512674340518:android:47b3c9e5fb531521215e67",
+        "android_client_info": {
+          "package_name": "com.neyesek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512674340518-fj7n8slfkdorpamdjoac69ca1mmuvvlo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neyesek",
+            "certificate_hash": "75f528c1cd9a8d787b2e39fc5e4c8b9420bd51c6"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAXUVI4bZu1i-q3-yPhzfCYdUEC7_KVHU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

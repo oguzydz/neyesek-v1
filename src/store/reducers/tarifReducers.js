@@ -20,6 +20,11 @@ const tarifReducers = (state = initalState, action) => {
                 user: '',
                 auth: false
             }
+        case actions.LOGIN_ANONYMOUS:
+            return {
+                ...state,
+                user: action.payload,
+            }
         case actions.ADD_FAV:
             return {
                 ...state,

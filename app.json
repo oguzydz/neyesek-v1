@@ -1,19 +1,19 @@
 {
   "expo": {
-    "name": "neyesek",
+    "name": "Ne Yesek",
     "slug": "neyesek",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#DD2429"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,7 +22,33 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.neyesek",
+      "buildNumber": "1.2.0",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.512674340518-dr35htplqj2ro2o6g1fhoves8mra4clo"
+        }
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+    "android": {
+      "package": "com.neyesek",
+      "versionCode": 3,
+      "adaptiveIcon": {
+        "backgroundColor": "#DD2429"
+      },
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-9786663498474045~7308137745"
+      },
+      "googleServicesFile": "./google-services.json",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.neyesek",
+      "permissions": []
+    },
+    "notification": {
+      "icon": "./assets/icon.png",
+      "color": "#DD2429",
+      "androidMode": "default"
     }
   }
 }

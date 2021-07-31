@@ -9,16 +9,18 @@ import { persistStore, persistReducer } from 'redux-persist';
 
 // Reducer Importing
 import tarifReducers from '../store/reducers/tarifReducers';
+import jsonReducers from '../store/reducers/jsonReducers';
 
 const rootReducer = combineReducers({
-    tarifReducers
+    tarifReducers,
+    jsonReducers,
 })
 
 
 // redux-persist ayarları
 const persistConfig = {
-    key: "root",
-    // key: "v1.1.8",
+    // key: "root",
+    key: "v1.2.1",
     debug: true,
     storage,
 }

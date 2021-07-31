@@ -3,8 +3,10 @@ import { Text, View, Image, StyleSheet, TouchableOpacity, ActivityIndicator, Dim
 import Colors from '../../components/Colors';
 import Constants from 'expo-constants';
 
-import tarif from '../../components/tarif.json';
+// import tarif from '../../components/tarif.json';
 import * as categories from '../../components/categories.json';
+
+import { connect } from 'react-redux'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Animatable from 'react-native-animatable';
@@ -17,9 +19,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height
 
+import {
+    AdMobBanner,
+} from 'expo-ads-admob';
 
 
-export default class HerSey extends Component {
+
+class HerSey extends Component {
 
     constructor(props) {
         super(props);
@@ -53,7 +59,7 @@ export default class HerSey extends Component {
         const randomTatli = Math.floor(Math.random() * categories["tatli"].length);
         const randomCorba = Math.floor(Math.random() * categories["corba"].length);
 
-        const get_tarif_ay = tarif.filter(item => {
+        const get_tarif_ay = this.props.tarif.filter(item => {
             const get = () => item.recipe.mainCategory === categories["anayemek"][randomay];
             if (get.length === 0) {
                 return item.recipe.subCategory === categories["anayemek"][randomay];
@@ -64,7 +70,7 @@ export default class HerSey extends Component {
 
         const randomIndexAY2 = Math.floor(Math.random() * get_tarif_ay.length);
 
-        const get_tarif_tatli = tarif.filter(item => {
+        const get_tarif_tatli = this.props.tarif.filter(item => {
             const get = () => item.recipe.mainCategory === categories["tatli"][randomTatli];
             if (get.length === 0) {
                 return item.recipe.subCategory === categories["tatli"][randomTatli];
@@ -75,7 +81,7 @@ export default class HerSey extends Component {
 
         const randomIndexTatli2 = Math.floor(Math.random() * get_tarif_tatli.length);
 
-        const get_tarif_corba = tarif.filter(item => {
+        const get_tarif_corba = this.props.tarif.filter(item => {
             const get = () => item.recipe.mainCategory === categories["corba"][randomCorba];
             if (get.length === 0) {
                 return item.recipe.subCategory === categories["corba"][randomCorba];
@@ -100,7 +106,7 @@ export default class HerSey extends Component {
         console.log(get_tarif_tatli[randomIndexTatli2].title);
         console.log(get_tarif_corba[randomIndexCorba2].title);
         console.log('-------');
-        
+
 
     }
 
@@ -299,6 +305,14 @@ export default class HerSey extends Component {
                             </TouchableOpacity>
                         </TouchableOpacity>
                     }
+
+                    <AdMobBanner
+                        bannerSize="smartBannerPortrait"
+                        adUnitID="ca-app-pub-9786663498474045/9826489875" // Test ID, Replace with your-admob-unit-id
+                        servePersonalizedAds // true or false
+                        onDidFailToReceiveAdWithError={this.bannerError} />
+
+                        
                 </ScrollView>
 
 
@@ -376,7 +390,14 @@ export default class HerSey extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        tarif: state.jsonReducers.json,
+    }
+}
 
+
+export default connect(mapStateToProps, null)(HerSey);
 
 const styles = StyleSheet.create({
     container: {
